@@ -32,53 +32,9 @@
     .btn-discord:hover{background:#4752c4;transform:translateY(-1px)}
 
     .main{max-width:900px;margin:0 auto;padding:24px 20px 60px}
-    .page-head{margin-bottom:20px}
-    .page-head h1{font-size:22px;font-weight:700;letter-spacing:-0.5px;margin-bottom:4px}
-
-    .controls{display:flex;gap:8px;align-items:center;margin-bottom:16px;flex-wrap:wrap}
-    .search{display:flex;align-items:center;background:#1a1a28;border:1px solid rgba(255,255,255,0.06);border-radius:8px;padding:0 12px;height:36px;flex:1;max-width:360px;transition:border-color 0.2s}
-    .search:focus-within{border-color:rgba(122,162,255,0.3)}
-    .search i{color:#555;font-size:13px;margin-right:8px}
-    .search input{background:none;border:none;outline:none;color:#ccc;font-size:13px;font-family:inherit;width:100%}
-    .search input::placeholder{color:#555}
-
-    .pills{display:flex;gap:6px;flex-wrap:wrap}
-    .pill{padding:6px 14px;border-radius:999px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:#666;font-size:11px;font-weight:500;cursor:pointer;transition:all 0.2s}
-    .pill:hover{border-color:rgba(255,255,255,0.12);color:#aaa}
-    .pill.active{background:rgba(122,162,255,0.1);border-color:rgba(122,162,255,0.25);color:#7aa2ff}
-
-    .theme-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;margin-bottom:20px}
-    .theme-card{background:#13131c;border:1px solid rgba(255,255,255,0.06);border-radius:10px;padding:16px;cursor:pointer;transition:all 0.15s}
-    .theme-card:hover{border-color:rgba(255,255,255,0.12);transform:translateY(-1px)}
-    .theme-name{font-size:13px;font-weight:600;margin-bottom:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-    .theme-author{font-size:11px;color:#555;margin-bottom:8px}
-    .theme-tags{display:flex;gap:4px;flex-wrap:wrap}
-    .theme-tags span{font-size:10px;padding:2px 8px;border-radius:999px;font-weight:500}
-    .t-none{background:rgba(255,255,255,0.04);color:#555}
-    .t-normal{background:rgba(122,162,255,0.1);color:#7aa2ff}
-    .t-feature{background:rgba(168,85,247,0.1);color:#a855f7}
-    .t-epic{background:rgba(234,179,8,0.1);color:#eab308}
-    .t-legendary{background:rgba(239,68,68,0.1);color:#ef4444}
-    .t-mythic{background:rgba(34,197,94,0.1);color:#22c55e}
-
-    .pagination{display:flex;justify-content:center;gap:6px}
-    .pagination button{padding:8px 14px;border-radius:8px;border:1px solid rgba(255,255,255,0.06);background:#13131c;color:#666;font-size:12px;cursor:pointer;transition:all 0.15s}
-    .pagination button:hover{border-color:rgba(255,255,255,0.12);color:#aaa}
-    .pagination button.active{background:rgba(122,162,255,0.1);border-color:rgba(122,162,255,0.25);color:#7aa2ff}
-    .pagination button:disabled{opacity:0.3;cursor:not-allowed}
-
-    .empty{text-align:center;padding:60px 0;color:#555;font-size:13px}
-
-    .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.7);display:none;align-items:center;justify-content:center;z-index:100}
-    .modal-overlay.show{display:flex}
-    .modal{background:#13131c;border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:24px;max-width:600px;width:90%;max-height:80vh;overflow-y:auto}
-    .modal h3{font-size:16px;margin-bottom:4px}
-    .modal .meta{font-size:11px;color:#555;margin-bottom:16px}
-    .modal pre{background:#0e0e16;border:1px solid rgba(255,255,255,0.06);border-radius:8px;padding:14px;font-family:'JetBrains Mono',monospace;font-size:11px;color:#999;overflow-x:auto;white-space:pre;max-height:300px;overflow-y:auto}
-    .modal-actions{display:flex;gap:8px;margin-top:16px;justify-content:flex-end}
-    .modal-actions button{padding:8px 16px;border-radius:8px;border:none;font-size:12px;font-weight:500;cursor:pointer;transition:all 0.15s;font-family:inherit}
-    .btn-close{background:#1a1a28;color:#666}
-    .btn-close:hover{background:#22223a;color:#aaa}
+    .test-key-btn{position:fixed;bottom:20px;right:20px;display:flex;align-items:center;gap:6px;padding:8px 14px;border-radius:8px;background:rgba(122,162,255,0.1);border:1px solid rgba(122,162,255,0.2);color:#7aa2ff;font-size:11px;font-weight:500;cursor:pointer;transition:all 0.15s;font-family:inherit;z-index:50}
+    .test-key-btn:hover{background:rgba(122,162,255,0.18);transform:translateY(-1px)}
+    .test-key-btn i{font-size:11px}
   </style>
 </head>
 <body>
@@ -102,7 +58,25 @@
   <div class="main">
   </div>
 
+  <button class="test-key-btn" id="testKeyBtn"><i class="fa-solid fa-key"></i> Test Key</button>
+
   <script>
+    const VERIFY_API = 'https://fynnmaster9000.pythonanywhere.com/api/verify';
+    document.getElementById('testKeyBtn').addEventListener('click', async () => {
+      const key = prompt('Paste your license key to test:');
+      if (!key) return;
+      try {
+        const r = await fetch(VERIFY_API + '?key=' + encodeURIComponent(key) + '&activate=false');
+        const d = await r.json();
+        if (d.valid) {
+          alert('✅ Valid key\n\nStatus: ' + (d.status || 'active') + '\nType: ' + (d.type || 'unknown') + (d.expires ? '\nExpires: ' + d.expires : ''));
+        } else {
+          alert('❌ Invalid key\n\n' + (d.message || 'Key is not valid.'));
+        }
+      } catch (e) {
+        alert('❌ Could not verify key.\n\n' + e.message);
+      }
+    });
   </script>
 </body>
 </html>
