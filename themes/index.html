@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Droomer - Themes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+    font-family:'Inter',"Segoe UI",sans-serif;
+    background:#0e0e16;
+    color:#d0d0d8;
+    min-height:100vh;
+}
+a{text-decoration:none;color:inherit}
+
+/* TOPBAR */
+.topbar{
+    position:sticky;top:0;
+    height:52px;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:0 28px;
+    background:rgba(14,14,22,0.85);
+    backdrop-filter:blur(16px);
+    border-bottom:1px solid rgba(255,255,255,0.06);
+    z-index:100;
+}
+.logo{font-weight:700;font-size:16px;color:#7aa2ff;letter-spacing:-0.3px}
+.nav{display:flex;gap:4px}
+.nav a{
+    color:#777;font-size:13px;font-weight:500;
+    padding:7px 14px;border-radius:8px;transition:all 0.2s;
+}
+.nav a:hover{background:rgba(122,162,255,0.1);color:#ccc}
+.nav a.active{background:rgba(122,162,255,0.12);color:#7aa2ff}
+
+/* MAIN */
+.main{max-width:900px;margin:0 auto;padding:24px 20px 60px}
+.page-head{margin-bottom:20px}
+.page-head h1{font-size:22px;font-weight:700;letter-spacing:-0.5px;margin-bottom:4px}
+.page-head p{font-size:13px;color:#666}
+
+/* CONTROLS */
+.controls{display:flex;gap:8px;align-items:center;margin-bottom:16px;flex-wrap:wrap}
+.search{display:flex;align-items:center;background:#1a1a28;border:1px solid rgba(255,255,255,0.06);border-radius:8px;padding:0 12px;height:36px;flex:1;max-width:360px;transition:border-color 0.2s}
+.search:focus-within{border-color:rgba(122,162,255,0.3)}
+.search i{color:#555;margin-right:8px;font-size:13px}
+.search input{flex:1;background:none;border:none;outline:none;color:#d0d0d8;font-size:13px;font-family:inherit}
+.search input::placeholder{color:#555}
+.pills{display:flex;gap:3px;background:#1a1a28;border:1px solid rgba(255,255,255,0.06);border-radius:8px;padding:3px}
+.pill{
+    padding:5px 14px;background:none;border:none;border-radius:6px;
+    color:#666;font-size:12px;font-weight:500;font-family:inherit;
+    cursor:pointer;transition:all 0.2s;
+}
+.pill:hover{color:#aaa}
+.pill.on{background:#7aa2ff;color:#0e0e16;font-weight:600}
+.count{font-size:12px;color:#555;margin-left:auto}
+
+/* GRID */
+.grid{display:flex;flex-direction:column;gap:6px}
+.theme-card{
+    display:flex;align-items:center;gap:14px;
+    padding:12px 14px;
+    background:#1a1a28;border:1px solid transparent;border-radius:8px;
+    transition:all 0.15s;cursor:default;
+}
+.theme-card:hover{background:#22223a;border-color:rgba(255,255,255,0.06)}
+.theme-thumb{
+    width:52px;height:52px;border-radius:6px;overflow:hidden;
+    background:#141420;flex-shrink:0;display:grid;place-items:center;
+    position:relative;
+}
+.theme-thumb img,.theme-thumb canvas{width:100%;height:100%;object-fit:cover}
+.theme-thumb .fallback{font-size:11px;color:#444;font-family:'Cascadia Code',monospace}
+.theme-info{flex:1;min-width:0}
+.theme-top{display:flex;align-items:center;gap:6px;margin-bottom:3px}
+.theme-name{font-size:13px;font-weight:600;color:#d0d0d8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.theme-badge{
+    padding:2px 7px;border-radius:4px;font-size:9px;font-weight:600;
+    text-transform:uppercase;letter-spacing:0.3px;flex-shrink:0;
+}
+.badge-official{background:rgba(122,162,255,0.12);color:#7aa2ff}
+.badge-community{background:rgba(255,255,255,0.05);color:#888}
+.badge-epic{background:rgba(204,128,48,0.12);color:#cc8030}
+.badge-legendary{background:rgba(200,80,160,0.12);color:#e090c0}
+.badge-mythic{background:rgba(80,160,255,0.12);color:#7ab8d8}
+.theme-meta{display:flex;gap:12px;font-size:11px;color:#555}
+.theme-meta i{opacity:0.5;font-size:10px}
+.theme-actions{flex-shrink:0}
+.copy-btn{
+    padding:5px 12px;border-radius:6px;font-size:11px;font-weight:600;
+    cursor:pointer;border:none;background:#7aa2ff;color:#0e0e16;
+    font-family:inherit;transition:all 0.15s;display:flex;align-items:center;gap:5px;
+}
+.copy-btn:hover{background:#92b8ff}
+.copy-btn i{font-size:10px}
+
+/* EMPTY / LOADING */
+.empty{text-align:center;padding:60px 20px;color:#555}
+.empty i{font-size:32px;display:block;margin-bottom:10px;opacity:0.2}
+.empty strong{display:block;font-size:14px;color:#888;margin-bottom:4px}
+.empty span{font-size:12px}
+.spinner{width:28px;height:28px;border:2px solid #222;border-top-color:#7aa2ff;border-radius:50%;animation:spin 0.6s linear infinite;margin:40px auto}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* PAGINATION */
+.pagination{display:flex;align-items:center;justify-content:center;gap:6px;margin-top:16px}
+.pg-btn{
+    width:32px;height:32px;border-radius:6px;font-size:12px;font-weight:600;
+    cursor:pointer;border:1px solid rgba(255,255,255,0.06);background:#1a1a28;
+    color:#888;display:grid;place-items:center;transition:all 0.15s;font-family:inherit;
+}
+.pg-btn:hover:not(:disabled){background:#22223a;color:#ccc;border-color:rgba(255,255,255,0.1)}
+.pg-btn:disabled{opacity:0.3;cursor:default}
+.pg-info{font-size:12px;color:#555;padding:0 6px}
+
+/* PREVIEW MODAL */
+.modal-overlay{
+    display:none;position:fixed;inset:0;background:rgba(0,0,0,0.8);
+    z-index:200;align-items:center;justify-content:center;backdrop-filter:blur(4px);
+}
+.modal-overlay.active{display:flex}
+.modal{
+    background:#1a1a28;border:1px solid rgba(255,255,255,0.08);border-radius:12px;
+    width:90vw;max-width:700px;overflow:hidden;position:relative;
+}
+.modal-topbar{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:10px 16px;background:#141420;border-bottom:1px solid rgba(255,255,255,0.06);
+}
+.modal-title{font-size:13px;font-weight:600;color:#aaa}
+.modal-close{
+    width:28px;height:28px;border:none;background:rgba(255,255,255,0.05);
+    color:#888;cursor:pointer;border-radius:6px;display:flex;align-items:center;
+    justify-content:center;font-size:12px;transition:all 0.15s;
+}
+.modal-close:hover{background:rgba(255,255,255,0.08);color:#ccc}
+.modal-body{padding:20px;max-height:70vh;overflow-y:auto}
+.modal-preview{font-family:'Cascadia Code','Fira Code',monospace;font-size:12px;line-height:1.7;padding:12px;border-radius:8px;overflow:auto}
+.modal-colors{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+.modal-swatch{width:28px;height:28px;border-radius:4px;border:1px solid rgba(255,255,255,0.08)}
+.modal-info{margin-top:12px;font-size:12px;color:#666}
+.modal-info strong{color:#aaa}
+
+@media(max-width:600px){
+    .controls{flex-direction:column;align-items:stretch}
+    .search{max-width:none}
+    .count{margin-left:0;margin-top:4px}
+    .theme-card{flex-wrap:wrap}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+    <a href="/" class="logo">Droomer</a>
+    <div class="nav">
+        <a href="/">Home</a>
+        <a href="/themes" class="active">Themes</a>
+    </div>
+</div>
+
+<div class="main">
+    <div class="page-head">
+        <h1>Themes</h1>
+        <p>Browse and preview community themes for Droomer</p>
+    </div>
+    <div class="controls">
+        <div class="search"><i class="fa-solid fa-magnifying-glass"></i><input type="text" id="search" placeholder="Search themes..."></div>
+        <div class="pills">
+            <button class="pill on" data-f="all">All</button>
+            <button class="pill" data-f="official">Official</button>
+            <button class="pill" data-f="community">Community</button>
+        </div>
+        <span class="count" id="count"></span>
+    </div>
+    <div class="grid" id="grid"></div>
+    <div class="pagination" id="pagination"></div>
+</div>
+
+<div class="modal-overlay" id="modalOverlay">
+    <div class="modal">
+        <div class="modal-topbar">
+            <span class="modal-title" id="modalTitle">Theme Preview</span>
+            <button class="modal-close" id="modalClose"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="modal-body" id="modalBody"></div>
+    </div>
+</div>
+
+<script>
+const API = 'https://fynnmaster9000.pythonanywhere.com/api/themes';
+let allThemes = [];
+let page = 1;
+const perPage = 15;
+let filter = 'all';
+let searchQuery = '';
+
+async function loadThemes() {
+    const grid = document.getElementById('grid');
+    grid.innerHTML = '<div class="spinner"></div>';
+    try {
+        const r = await fetch(API);
+        const data = await r.json();
+        allThemes = (data.themes || []).map(t => ({
+            ...t,
+            theme: t.theme || (t.theme_json ? (typeof t.theme_json === 'string' ? JSON.parse(t.theme_json) : t.theme_json) : null)
+        }));
+    } catch (e) {
+        grid.innerHTML = '<div class="empty"><i class="fa-solid fa-cloud-arrow-down"></i><strong>Failed to load themes</strong><span>Could not connect to the server.</span></div>';
+        return;
+    }
+    render();
+}
+
+function render() {
+    const q = searchQuery.toLowerCase();
+    let filtered = allThemes.filter(t => t.name.toLowerCase().includes(q) || (t.author || '').toLowerCase().includes(q));
+    if (filter === 'official') filtered = filtered.filter(t => t.is_official);
+    else if (filter === 'community') filtered = filtered.filter(t => !t.is_official);
+
+    const total = filtered.length;
+    const pages = Math.ceil(total / perPage) || 1;
+    if (page > pages) page = pages;
+    const start = (page - 1) * perPage;
+    const paged = filtered.slice(start, start + perPage);
+
+    document.getElementById('count').textContent = total + ' theme' + (total !== 1 ? 's' : '');
+    const grid = document.getElementById('grid');
+
+    if (!paged.length) {
+        grid.innerHTML = '<div class="empty"><i class="fa-solid fa-palette"></i><strong>No themes found</strong><span>Try a different search or filter.</span></div>';
+        document.getElementById('pagination').innerHTML = '';
+        return;
+    }
+
+    grid.innerHTML = paged.map(t => {
+        const c = t.theme?.colors || {};
+        const bg = c['editor.background'] || '#0e0e14';
+        const fg = c['editor.foreground'] || '#d0d0d8';
+        const rules = t.theme?.rules || [];
+        const kw = rules.find(r => r.token === 'keyword')?.foreground;
+        const str = rules.find(r => r.token === 'string')?.foreground;
+        const fn = rules.find(r => r.token === 'function')?.foreground;
+
+        let thumbHtml;
+        if (t.theme?.images?.[0]?.url) {
+            thumbHtml = `<img src="${esc(t.theme.images[0].url)}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"><div style="display:none;width:100%;height:100%;place-items:center" class="fallback"><i class="fa-solid fa-image" style="font-size:16px;color:#444"></i></div>`;
+        } else {
+            const cols = [bg, fg, kw?'#'+kw:null, str?'#'+str:null, fn?'#'+fn:null, c['editorCursor.foreground']?'#'+c['editorCursor.foreground']:null].filter(Boolean).slice(0,6);
+            const swatches = cols.map(cl => `<div style="background:${cl};width:100%;aspect-ratio:1"></div>`).join('');
+            const gc = cols.length <= 3 ? cols.length : cols.length <= 4 ? 2 : 3;
+            thumbHtml = `<div style="display:grid;grid-template-columns:repeat(${gc},1fr);width:100%;height:100%;gap:1px;background:#141420">${swatches}</div>`;
+        }
+
+        let badges = '';
+        if (t.is_official) badges += '<span class="theme-badge badge-official">Official</span>';
+        const rn = t.rating || 'none';
+        if (rn === 'epic') badges += '<span class="theme-badge badge-epic">Epic</span>';
+        else if (rn === 'legendary') badges += '<span class="theme-badge badge-legendary">Legendary</span>';
+        else if (rn === 'mythic') badges += '<span class="theme-badge badge-mythic">Mythic</span>';
+
+        return `<div class="theme-card" data-id="${t.id}">
+            <div class="theme-thumb" style="background:${esc(bg)}">${thumbHtml}</div>
+            <div class="theme-info">
+                <div class="theme-top"><span class="theme-name">${esc(t.name)}</span>${badges}</div>
+                <div class="theme-meta">
+                    <span><i class="fa-solid fa-user"></i> ${esc(t.author || 'Unknown')}</span>
+                    <span><i class="fa-solid fa-${t.is_official ? 'star' : 'globe'}"></i> ${t.is_official ? 'Built-in' : 'Community'}</span>
+                </div>
+            </div>
+            <div class="theme-actions"><button class="copy-btn preview-btn" data-id="${t.id}"><i class="fa-solid fa-eye"></i> Preview</button></div>
+        </div>`;
+    }).join('');
+
+    grid.querySelectorAll('.preview-btn').forEach(b => {
+        b.addEventListener('click', () => openPreview(parseInt(b.dataset.id)));
+    });
+
+    // Pagination
+    const pg = document.getElementById('pagination');
+    pg.innerHTML = '';
+    if (page > 1) pg.innerHTML += `<button class="pg-btn" data-p="${page-1}"><i class="fa-solid fa-chevron-left"></i></button>`;
+    pg.innerHTML += `<span class="pg-info">Page ${page} of ${pages}</span>`;
+    if (page < pages) pg.innerHTML += `<button class="pg-btn" data-p="${page+1}"><i class="fa-solid fa-chevron-right"></i></button>`;
+    pg.querySelectorAll('.pg-btn').forEach(b => b.addEventListener('click', () => { page = parseInt(b.dataset.p); render(); }));
+}
+
+function openPreview(id) {
+    const t = allThemes.find(x => x.id === id);
+    if (!t || !t.theme) return;
+    const theme = t.theme;
+    const c = theme.colors || {};
+    const bg = c['editor.background'] || '#0e0e14';
+    const fg = c['editor.foreground'] || '#d0d0d8';
+    const rules = theme.rules || [];
+    const kw = rules.find(r => r.token === 'keyword')?.foreground || fg;
+    const str = rules.find(r => r.token === 'string')?.foreground || fg;
+    const fn = rules.find(r => r.token === 'function')?.foreground || fg;
+    const nm = rules.find(r => r.token === 'number')?.foreground || fg;
+    const cm = rules.find(r => r.token === 'comment')?.foreground || '#555';
+    const cur = c['editorCursor.foreground'] || fg;
+    const lineBg = c['editor.lineHighlightBackground'] || bg;
+
+    document.getElementById('modalTitle').textContent = t.name + ' by ' + (t.author || 'Unknown');
+
+    let html = `<div class="modal-preview" style="background:${bg};color:${fg}">`;
+    if (theme.images?.length) {
+        theme.images.forEach(img => {
+            if (img.url) html += `<div style="position:absolute;inset:0;opacity:${img.opacity||0.15};mix-blend-mode:${img.blend||'screen'};overflow:hidden;border-radius:8px"><img src="${esc(img.url)}" style="width:100%;height:100%;object-fit:cover"></div>`;
+        });
+    }
+    html += `<div style="position:relative;z-index:1">`;
+    html += `<div style="background:${lineBg};padding:1px 6px;border-radius:3px;margin:0 -6px"><span style="color:${cm};font-style:italic">-- theme preview</span></div>`;
+    html += `<div><span style="color:${kw}">local</span> Players <span style="color:${fn}">=</span> game:<span style="color:${fn}">GetService</span>(<span style="color:${str}">"Players"</span>)</div>`;
+    html += `<div><span style="color:${kw}">local</span> player <span style="color:${fn}">=</span> Players.<span style="color:${fg}">LocalPlayer</span></div>`;
+    html += `<div></div>`;
+    html += `<div><span style="color:${kw}">local function</span> <span style="color:${fn}">greet</span>(name)</div>`;
+    html += `<div style="padding-left:16px"><span style="color:${fn}">print</span>(<span style="color:${str}">"Hello, "</span> .. name)</div>`;
+    html += `<div><span style="color:${kw}">end</span></div>`;
+    html += `<div></div>`;
+    html += `<div><span style="color:${fn}">greet</span>(player.<span style="color:${fg}">DisplayName</span>)</div>`;
+    html += `<div></div>`;
+    html += `<div><span style="color:${kw}">for</span> i <span style="color:${fn}">=</span> <span style="color:${nm}">1</span>, <span style="color:${nm}">10</span> <span style="color:${kw}">do</span></div>`;
+    html += `<div style="padding-left:16px"><span style="color:${fn}">print</span>(<span style="color:${str}">"Count: "</span> .. i)</div>`;
+    html += `<div><span style="color:${kw}">end</span></div>`;
+    html += `<div><span style="color:${cm};font-style:italic">-- cursor</span><span style="color:${cur}">|</span></div>`;
+    html += `</div></div>`;
+
+    // Color swatches
+    const allCols = [bg, fg, '#'+kw, '#'+str, '#'+fn, '#'+nm, '#'+cm, '#'+cur].filter(Boolean);
+    const unique = [...new Set(allCols)];
+    html += `<div class="modal-colors">${unique.map(cl => `<div class="modal-swatch" style="background:${cl}" title="${cl}"></div>`).join('')}</div>`;
+    html += `<div class="modal-info"><strong>${t.name}</strong> by ${esc(t.author || 'Unknown')}${t.is_official ? ' &middot; Official' : ' &middot; Community'}</div>`;
+
+    document.getElementById('modalBody').innerHTML = html;
+    document.getElementById('modalOverlay').classList.add('active');
+}
+
+function esc(s) { if (!s) return ''; const d = document.createElement('div'); d.textContent = String(s); return d.innerHTML; }
+
+document.getElementById('modalClose').addEventListener('click', () => document.getElementById('modalOverlay').classList.remove('active'));
+document.getElementById('modalOverlay').addEventListener('click', e => { if (e.target === e.currentTarget) e.currentTarget.classList.remove('active'); });
+
+document.getElementById('search').addEventListener('input', e => { searchQuery = e.target.value; page = 1; render(); });
+document.querySelectorAll('.pill').forEach(p => {
+    p.addEventListener('click', () => {
+        document.querySelectorAll('.pill').forEach(x => x.classList.remove('on'));
+        p.classList.add('on');
+        filter = p.dataset.f;
+        page = 1;
+        render();
+    });
+});
+
+loadThemes();
+</script>
+</body>
+</html>
