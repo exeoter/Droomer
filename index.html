@@ -32,9 +32,6 @@
     .btn-discord:hover{background:#4752c4;transform:translateY(-1px)}
 
     .main{max-width:900px;margin:0 auto;padding:24px 20px 60px}
-    .test-key-btn{position:fixed;bottom:20px;right:20px;display:flex;align-items:center;gap:6px;padding:8px 14px;border-radius:8px;background:rgba(122,162,255,0.1);border:1px solid rgba(122,162,255,0.2);color:#7aa2ff;font-size:11px;font-weight:500;cursor:pointer;transition:all 0.15s;font-family:inherit;z-index:50}
-    .test-key-btn:hover{background:rgba(122,162,255,0.18);transform:translateY(-1px)}
-    .test-key-btn i{font-size:11px}
   </style>
 </head>
 <body>
@@ -57,26 +54,5 @@
 
   <div class="main">
   </div>
-
-  <button class="test-key-btn" id="testKeyBtn"><i class="fa-solid fa-key"></i> Test Key</button>
-
-  <script>
-    const VERIFY_API = 'https://fynnmaster9000.pythonanywhere.com/api/verify';
-    document.getElementById('testKeyBtn').addEventListener('click', async () => {
-      const key = prompt('Paste your license key to test:');
-      if (!key) return;
-      try {
-        const r = await fetch(VERIFY_API + '?key=' + encodeURIComponent(key) + '&activate=false');
-        const d = await r.json();
-        if (d.valid) {
-          alert('✅ Valid key\n\nStatus: ' + (d.status || 'active') + '\nType: ' + (d.type || 'unknown') + (d.expires ? '\nExpires: ' + d.expires : ''));
-        } else {
-          alert('❌ Invalid key\n\n' + (d.message || 'Key is not valid.'));
-        }
-      } catch (e) {
-        alert('❌ Could not verify key.\n\n' + e.message);
-      }
-    });
-  </script>
 </body>
 </html>
